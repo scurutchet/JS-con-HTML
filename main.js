@@ -23,32 +23,48 @@ class Persona {
 const arrayPersona = [];
 
 const formulario = document.getElementById("formulario");
+
 formulario.addEventListener("submit", (e) => {
     e.preventDefault();
-    const sueldo = document.getElementById("sueldo");
-    const gastos = document.getElementById("gastos");
-    const ahorro = document.getElementById("ahorro");
-    console.log("El sueldo ingresado es $" + sueldo.value);
-    console.log("Los gastos ingresados son $" + gastos.value);
-    console.log("El ahorro deseado es $" + ahorro.value);
-    const persona = new Persona(sueldo.value, gastos.value, ahorro.value);
+    ingresarDatos();
+    
+});
+
+function ingresarDatos(){
+    const sueldo = parseFloat(document.getElementById("sueldo").value);
+    const gastos = parseFloat(document.getElementById("gastos").value);
+    const ahorro = parseFloat(document.getElementById("ahorro").value);
+
+    const persona = new Persona(sueldo, gastos, ahorro);
     arrayPersona.push(persona);
     console.log(arrayPersona);
     formulario.reset();
+}
+
+const contenedorResultado = document.getElementById("contenedorResultado");
+
+const btn = document.getElementById("btn");
+
+btn.addEventListener("click", () => {
+    mostrarResultado();
 });
 
-const semanasDelMes = 4;
 
-function calculoDisponible(valor1, valor2, valor3, valor4){
-    resultado = (valor1 - valor2 - valor3) / valor4;
+
+function mostrarResultado(){
+    contenedorResultado.innerHTML = "";
+    const semana = 4;
+    arrayPersona.forEach( persona => {
+        const div = document.createElement("div");
+        div.innerHTML =  `
+            <div>
+                <p>El sueldo ingresado es $${persona.sueldo}</p>
+                <p>Los gastos ingresados son $${persona.gastos}</p>
+                <p>El ahorro deseado es $${persona.ahorro}</p>
+                <p>Lo que puedes gastar por semana es $${(persona.sueldo - persona.gastos - persona.ahorro) / semana}</p>
+
+            </div>
+`;
+        contenedorResultado.appendChild(div);
+    })
 };
-calculoDisponible(sueldo.value, gastos.value, ahorro.value, semanasDelMes);
-
-const calculo = document.getElementById("calculo");
-
-const mostrarResultado = document.createElement("p");
-mostrarResultado.innerText = "Lo que puedes gastar por semana es $" + resultado;
-
-calculo.appendChild(mostrarResultado);
-
-

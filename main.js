@@ -1,9 +1,7 @@
 // ``
 const tituloPrincipal = document.getElementById ("tituloPrincipal");
-console.log(tituloPrincipal);
 
 tituloPrincipal.innerText = "Hola! Esto es una calculadora de ahorro.";
-console.log(tituloPrincipal);
 
 const contenedor = document.getElementById("contenedor");
 
@@ -18,7 +16,7 @@ class Persona {
         this.gastos = gastos;
         this.ahorro = ahorro;
     }
-}
+};
 
 const arrayPersona = [];
 
@@ -27,7 +25,7 @@ const formulario = document.getElementById("formulario");
 formulario.addEventListener("submit", (e) => {
     e.preventDefault();
     ingresarDatos();
-    
+    mostrarResultado();    
 });
 
 function ingresarDatos(){
@@ -37,18 +35,19 @@ function ingresarDatos(){
 
     const persona = new Persona(sueldo, gastos, ahorro);
     arrayPersona.push(persona);
-    console.log(arrayPersona);
+    localStorage.setItem("arrayPersona", JSON.stringify(arrayPersona));
     formulario.reset();
-}
+};
+
+if(localStorage.getItem("arrayPersona")){
+    let arrayPersona = JSON.parse(localStorage.getItem("arrayPersona"));
+    for(let i = 0; i < arrayPersona.length; i++){
+        console.log(arrayPersona[i]);
+    } 
+};
+
 
 const contenedorResultado = document.getElementById("contenedorResultado");
-
-const btn = document.getElementById("btn");
-
-btn.addEventListener("click", () => {
-    mostrarResultado();
-});
-
 
 
 function mostrarResultado(){
@@ -60,11 +59,13 @@ function mostrarResultado(){
             <div>
                 <p>El sueldo ingresado es $${persona.sueldo}</p>
                 <p>Los gastos ingresados son $${persona.gastos}</p>
-                <p>El ahorro deseado es $${persona.ahorro}</p>
-                <p>Lo que puedes gastar por semana es $${(persona.sueldo - persona.gastos - persona.ahorro) / semana}</p>
-
+                <p>El ahorro deseado es $${persona.ahorro}</p> 
             </div>
-`;
+`;      const etiquetaP = document.createElement("etiquetaP");
+        (persona.gastos + persona.ahorro) >= persona.sueldo ? etiquetaP.innerHTML= `<p>Lo que quieres ahorrar es más de lo que tienes disponible, prueba con una cantidad menor</p>` : 
+        etiquetaP.innerHTML= `<p>Lo que puedes gastar por semana es $${(persona.sueldo - persona.gastos - persona.ahorro) / semana}</p>` || alert(`Los datos que ingresaste no son válidos`);
+
+        div.appendChild(etiquetaP);
         contenedorResultado.appendChild(div);
     })
 };

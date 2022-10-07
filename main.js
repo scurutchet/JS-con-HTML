@@ -18,7 +18,7 @@ class Persona {
     }
 };
 
-const arrayPersona = [];
+const arrayPersona = JSON.parse(sessionStorage.getItem("arrayPersona")) ||[];
 
 const formulario = document.getElementById("formulario");
 
@@ -35,37 +35,40 @@ function ingresarDatos(){
 
     const persona = new Persona(sueldo, gastos, ahorro);
     arrayPersona.push(persona);
-    localStorage.setItem("arrayPersona", JSON.stringify(arrayPersona));
+    sessionStorage.setItem("arrayPersona", JSON.stringify(arrayPersona));
     formulario.reset();
 };
 
-if(localStorage.getItem("arrayPersona")){
-    let arrayPersona = JSON.parse(localStorage.getItem("arrayPersona"));
-    for(let i = 0; i < arrayPersona.length; i++){
-        console.log(arrayPersona[i]);
-    } 
-};
-
-
 const contenedorResultado = document.getElementById("contenedorResultado");
-
 
 function mostrarResultado(){
     contenedorResultado.innerHTML = "";
     const semana = 4;
     arrayPersona.forEach( persona => {
         const div = document.createElement("div");
+        div.className = "usuario"
         div.innerHTML =  `
-            <div>
-                <p>El sueldo ingresado es $${persona.sueldo}</p>
-                <p>Los gastos ingresados son $${persona.gastos}</p>
-                <p>El ahorro deseado es $${persona.ahorro}</p> 
-            </div>
-`;      const etiquetaP = document.createElement("etiquetaP");
-        (persona.gastos + persona.ahorro) >= persona.sueldo ? etiquetaP.innerHTML= `<p>Lo que quieres ahorrar es más de lo que tienes disponible, prueba con una cantidad menor</p>` : 
-        etiquetaP.innerHTML= `<p>Lo que puedes gastar por semana es $${(persona.sueldo - persona.gastos - persona.ahorro) / semana}</p>` || alert(`Los datos que ingresaste no son válidos`);
-
-        div.appendChild(etiquetaP);
+                <br>
+                <p class="text-center">El sueldo ingresado es $${persona.sueldo}</p>
+                <br>
+                <p class="text-center">Los gastos ingresados son $${persona.gastos}</p>
+                <br>
+                <p class="text-center">El ahorro deseado es $${persona.ahorro}</p>
+                <br>`
+        console.log(persona)
+        if(persona.gastos+persona.ahorro>=persona.sueldo){
+            setTimeout( ()=> Swal.fire({
+                text: "Lo que quieres ahorrar es más de lo que tienes disponible, prueba con una cantidad menor.",
+                background: "#E6B0AA",
+                backdrop: "#283747"
+            }) , 3000);
+        }else{
+            setTimeout( ()=> Swal.fire({
+                text: `Lo que puedes gastar por semana es $${(persona.sueldo - persona.gastos - persona.ahorro) / semana}`,
+                background: "#A2D9CE",
+                backdrop: "#283747"
+            }) , 3000);    
+        };
         contenedorResultado.appendChild(div);
     })
 };

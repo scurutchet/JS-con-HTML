@@ -1,0 +1,80 @@
+body {
+    background-image: url(./towfiqu-barbhuiya-joqWSI9u_XM-unsplash.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    max-height: 100vh;
+}
+
+.conGeneral{
+    color: #414335;
+}
+
+.conForm {
+    max-width: 400px;
+    width: 100%;
+    margin: 30px auto;
+    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  }
+  
+.formInner {
+    padding: 30px;
+  }
+  
+  .inputHolder {
+    position: relative;
+    margin-bottom: 25px;
+  }
+  
+  .inputText {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-bottom: 1px solid #414335;
+    background: transparent;
+    color: black;
+  }
+  
+  
+  .label {
+    position: absolute;
+    pointer-events: none;
+    transition: 0.5s ease all;
+    font-size: 16px;
+    font-weight: bold;
+    color: #414335;
+    margin-left: -90%;
+    padding-top: 15px;
+  }
+  
+  button {
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 15px;
+    width: 100%;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1);
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    background: transparent;
+    color: #414335;
+    transition: 0.5s ease all;
+  }
+  button:hover {
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.4);
+  }
+  button:focus {
+    outline: 0;
+  }
+  
+  input:focus{
+    outline: 0;
+    border-bottom: 2px solid #414335;
+  }
+  
+  input:focus ~ .label,
+  input:not(:focus):valid ~ .label {
+    top: -20px;
+    left: 100%;
+    font-size: 11px;
+  }

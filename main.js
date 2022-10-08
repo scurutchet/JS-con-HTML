@@ -59,16 +59,20 @@ function mostrarResultado(){
         if(persona.gastos+persona.ahorro>=persona.sueldo){
             setTimeout( ()=> Swal.fire({
                 text: "Lo que quieres ahorrar es más de lo que tienes disponible, prueba con una cantidad menor.",
-                background: "#E6B0AA",
-                backdrop: "#283747"
+                background: "#735146",
+                backdrop: "#CFB6A6",
+                color: "#CFB6A6",
+                confirmButtonColor: "#CFB6A6"
             }) , 3000);
         }else{
             setTimeout( ()=> Swal.fire({
                 text: `Lo que puedes gastar por semana es $${(persona.sueldo - persona.gastos - persona.ahorro) / semana}`,
-                background: "#A2D9CE",
-                backdrop: "#283747"
+                background: "#828A34",
+                backdrop: "#CFB6A6",
+                color: "#CFB6A6",
+                confirmButtonColor: "#CFB6A6"
             }) , 3000);    
-        };
+        } ;
         contenedorResultado.appendChild(div);
     })
 };

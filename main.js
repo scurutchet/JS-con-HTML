@@ -1,4 +1,3 @@
-// ``
 //Creo un título primario y uno secundario y los agrego al DOM:
 const tituloPrincipal = document.getElementById ("tituloPrincipal");
 
@@ -22,6 +21,7 @@ class Persona {
 
 //Declaro arrayPersona:
 const arrayPersona = JSON.parse(sessionStorage.getItem("arrayPersona")) ||[];
+console.log(arrayPersona);
 
 //Declaro formulario y le aasigno las funciones que tiene que ejecutar el botón del form:
 const formulario = document.getElementById("formulario");
@@ -44,6 +44,7 @@ function ingresarDatos(){
     formulario.reset();
 };
 
+
 //Creo la función mostrarResultado, donde por cada persona creada en el array se crea un div que modifica el DOM. Además, creo un condicional para mostrar los posibles resultados usando una librería:
 const contenedorResultado = document.getElementById("contenedorResultado");
 
@@ -53,6 +54,7 @@ function mostrarResultado(){
     arrayPersona.forEach( persona => {
         const div = document.createElement("div");
         div.className = "usuario"
+        div.innerHTML = "";
         div.innerHTML =  `
                 <br>
                 <p class="text-center">El sueldo ingresado es $${persona.sueldo}</p>
@@ -61,7 +63,6 @@ function mostrarResultado(){
                 <br>
                 <p class="text-center">El ahorro deseado es $${persona.ahorro}</p>
                 <br>`
-        console.log(persona);
         if(persona.gastos+persona.ahorro>=persona.sueldo){
             setTimeout( ()=> Swal.fire({
                 text: "Lo que quieres ahorrar es más de lo que tienes disponible, prueba con una cantidad menor.",
@@ -72,7 +73,7 @@ function mostrarResultado(){
             }) , 3000);
         }else if(persona.gastos+persona.ahorro<persona.sueldo){
             setTimeout( ()=> Swal.fire({
-                text: `Lo que puedes gastar por semana es $${(persona.sueldo - persona.gastos - persona.ahorro) / semana}`,
+                text: `Lo que puedes gastar por semana es $${(persona.sueldo - persona.gastos - persona.ahorro) / semana}.`,
                 background: "#828A34",
                 backdrop: "#CFB6A6",
                 color: "#CFB6A6",
@@ -101,17 +102,15 @@ setInterval(()=> {
         .then(({blue, oficial, solidario}) => {
             dolar.innerHTML = `
             <br>
-            <h5 class="text-center">Si quieres saber cuánto puedes ahorar en USD, aquí está la cotización actual (desde pesos argentinos): </h5>
+            <h5 class="text-center">Si quieres saber cuánto puedes gastar en USD, aquí está la cotización actual para que puedas convertir el resultado (desde pesos argentinos): </h5>
             <br>
             <p class="text-center">Dolar oficial: ${oficial}</p>
             <br>
             <p class="text-center">Dolar blue: ${blue}</p>
             <br>
             <p class="text-center">Dolar solidario: ${solidario}</p>
-            <br>
-            `
+            <br>`
+            
         })
         .catch(error => console.error(error))
 }, 3000);
-
-//No sé cómo hacer para que aparezcan en el div solo los últimos datos que se ingresan en el form. Además, puse la cotización en pesos argentinos porque no encontré una api como criptoya para pesos uruguayos.
